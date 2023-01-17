@@ -2,12 +2,12 @@ from hashlib import sha1
 
 from .lib import pyotp
 
-from keypirinha import Plugin, ItemCategory, ItemArgsHint, ItemHitHint, Events, Sort, Match
-from keypirinha_util import set_clipboard
+import keypirinha as kp
+import keypirinha_util as kpu
 
 
-class TOTP(Plugin):
-    CATEGORY_TOTP = ItemCategory.USER_BASE + 1
+class TOTP(kp.Plugin):
+    CATEGORY_TOTP = kp.ItemCategory.USER_BASE + 1
 
     def _load_config(self):
         uris = self.load_settings().get_multiline('authenticators', 'main')
@@ -57,8 +57,8 @@ class TOTP(Plugin):
                         short_desc='Edit package configuration to add authenticators',
                     ),
                 ],
-                Match.ANY,
-                Sort.NONE,
+                kp.Match.ANY,
+                kp.Sort.NONE,
             )
             return
 
@@ -68,11 +68,11 @@ class TOTP(Plugin):
                 label=auth.name,
                 short_desc=auth.now(),
                 target=k,
-                args_hint=ItemArgsHint.FORBIDDEN,
-                hit_hint=ItemHitHint.IGNORE,
+                args_hint=kp.ItemArgsHint.FORBIDDEN,
+                hit_hint=kp.ItemHitHint.IGNORE,
             )
             for k, auth in self._authenticators.items()
         ])
 
     def on_execute(self, item, action):
-        set_clipboard(self._authenticators[item.target()].now())
+        kpu.set_clipboard(self._authenticators[item.target()].now())
