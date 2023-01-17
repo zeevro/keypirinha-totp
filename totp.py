@@ -1,6 +1,6 @@
 from hashlib import sha1
 
-import pyotp
+from .lib import pyotp
 
 from keypirinha import Plugin, ItemCategory, ItemArgsHint, ItemHitHint, Events, Sort, Match
 from keypirinha_util import set_clipboard
