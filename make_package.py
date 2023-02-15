@@ -9,7 +9,8 @@ import zipfile
 SELF_DIR = pathlib.Path(__file__).parent
 LIB_DIR = SELF_DIR / 'lib'
 REQUIREMENTS_PATH = SELF_DIR / 'requirements.txt'
-PACKAGE_PATH = SELF_DIR / 'Totp.keypirinha-package'
+DIST_DIR = SELF_DIR / 'dist'
+PACKAGE_PATH = DIST_DIR / 'Totp.keypirinha-package'
 
 PACKAGE_FILES = [
     'totp.py',
@@ -23,6 +24,8 @@ def main():
 
     print('Installing requirements')
     subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--target', str(LIB_DIR), '-r', str(REQUIREMENTS_PATH)])
+
+    DIST_DIR.mkdir(exist_ok=True)
 
     print(f'Creating {PACKAGE_PATH.name}')
     with zipfile.ZipFile(PACKAGE_PATH, 'w', zipfile.ZIP_DEFLATED) as package:
