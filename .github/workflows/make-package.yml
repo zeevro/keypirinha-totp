@@ -1,0 +1,26 @@
+name: Make package
+
+on:
+  push:
+    tags:
+      - v*.*.*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Make package
+      run: make
+
+    - name: Create release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: dist/*.keypirinha-package
