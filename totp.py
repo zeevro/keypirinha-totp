@@ -31,18 +31,18 @@ class TOTP(kp.Plugin):
     def on_catalog(self):
         self.set_catalog([
             self.create_item(
-                category=ItemCategory.KEYWORD,
+                category=kp.ItemCategory.KEYWORD,
                 label=label,
                 short_desc='Authenticator',
                 target=f'totp_{label}',
-                args_hint=ItemArgsHint.REQUIRED,
-                hit_hint=ItemHitHint.IGNORE,
+                args_hint=kp.ItemArgsHint.REQUIRED,
+                hit_hint=kp.ItemHitHint.IGNORE,
             )
             for label in ['Authenticator', 'Auth', 'TOTP']
         ])
 
     def on_events(self, flags: int):
-        if flags & Events.PACKCONFIG:
+        if flags & kp.Events.PACKCONFIG:
             self._load_config()
 
     def on_suggest(self, user_input: str, items_chain: list):
